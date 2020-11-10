@@ -15,3 +15,5 @@ spec:
       containers:
       - name: main-app
         image: koxanybak/rnd
+        ports:
+          - containerPort: 8000

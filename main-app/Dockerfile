@@ -13,6 +13,7 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o app
 
-FROM scratch
+FROM ubuntu:latest
 COPY --from=builder /app/app /app/
+EXPOSE 8000
 ENTRYPOINT [ "/app/app" ]
