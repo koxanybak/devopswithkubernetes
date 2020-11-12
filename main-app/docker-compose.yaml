@@ -4,6 +4,6 @@ services:
   main-app:
     container_name: main-app
     build: .
-    image: koxanybak/main-app
+    image: koxanybak/rnd
     ports:
       - 8000:8000

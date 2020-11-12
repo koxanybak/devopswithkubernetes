@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+  api:
+    build: .
+    container_name: pingpong
+    image: koxanybak/pingpong
+    ports:
+      - 8000:8000
