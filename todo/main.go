@@ -17,14 +17,16 @@ func main() {
 	if port == "" {
 		log.Fatal("Error: no port specified")
 	}
-	r := mux.NewRouter()
+	mainRouter := mux.NewRouter()
 
 	spa := routes.SpaHandler{StaticPath: "build", IndexPath: "index.html"}
-	r.PathPrefix("/").Handler(spa)
+	routes.APIRouter(mainRouter)
+
+	mainRouter.PathPrefix("/").Handler(spa)
 
 	srv := &http.Server{
 		Addr: fmt.Sprintf("0.0.0.0:%s", port),
-		Handler: r,
+		Handler: mainRouter,
 	}
 
 	fmt.Println("Server started in port", port)

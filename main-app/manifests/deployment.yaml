@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: main-app
+  name: main-app-dep
 spec:
   replicas: 1
   selector:
@@ -12,6 +12,18 @@ spec:
       labels:
         app: main-app
     spec:
+      volumes:
+        - name: files
+          persistentVolumeClaim:
+            claimName: main-app-claim
       containers:
-      - name: main-app
-        image: koxanybak/rnd
+      - name: main-app-hash
+        image: koxanybak/hash
+        volumeMounts:
+          - mountPath: /app/files
+            name: files
+      - name: main-app-stamp
+        image: koxanybak/stamp
+        volumeMounts:
+          - mountPath: /app/files
+            name: files

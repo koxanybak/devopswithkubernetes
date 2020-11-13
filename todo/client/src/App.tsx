@@ -1,26 +1,30 @@
+import { Grid } from '@material-ui/core';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TodoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
 
-function App() {
+const size = 6
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Grid
+        container
+        spacing={2}
+        direction="column"
+      >
+        <Grid item md={size}>
+          <img src="/api/image" alt="daily" />
+        </Grid>
+        <Grid item md={size}>
+          <TodoForm />
+        </Grid>
+        <Grid item md={4}>
+          <TodoList />
+        </Grid>
+      </Grid>
     </div>
   );
-}
+};
 
 export default App;

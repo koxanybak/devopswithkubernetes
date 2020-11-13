@@ -1,9 +1,22 @@
 version: "3.5"
 
 services:
-  main-app:
-    container_name: main-app
-    build: .
-    image: koxanybak/rnd
+  hash:
+    container_name: hash
+    build:
+      context: ./hash
+    image: koxanybak/hash
     ports:
       - 8000:8000
+    volumes:
+      - "data:/app/files"
+  stamp:
+    container_name: stamp
+    build:
+      context: ./stamp
+    image: koxanybak/stamp
+    volumes:
+      - "data:/app/files"
+
+volumes:
+  data:

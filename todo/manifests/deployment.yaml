@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: todo
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: todo
@@ -11,6 +12,13 @@ spec:
       labels:
         app: todo
     spec:
+      volumes:
+        - name: assets
+          persistentVolumeClaim:
+              claimName: todo-claim
       containers:
       - name: todo
         image: koxanybak/todo
+        volumeMounts:
+          - mountPath: /srv/assets
+            name: assets
