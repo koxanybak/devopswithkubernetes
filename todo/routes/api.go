@@ -7,6 +7,6 @@ import (
 
 // APIRouter returns a router for the REST-api
 func APIRouter(mainRouter *mux.Router) {
-	r := mainRouter.PathPrefix("/api").Subrouter()
-	r.HandleFunc("/image", api.ImageHandler)
+	r := mainRouter.PathPrefix("/image").Subrouter()
+	r.HandleFunc("/", api.ImageHandler)
 }

@@ -1,9 +1,9 @@
 version: "3.5"
 
 services:
-  api:
+  srv:
     build: .
-    container_name: todo-api
+    container_name: todo-srv
     image: koxanybak/todo
     ports:
       - 8000:8000

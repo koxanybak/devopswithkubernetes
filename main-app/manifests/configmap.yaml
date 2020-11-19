@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: main-app-cfg
+  namespace: main
+data:
+  message: Hello

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pingpong-dep
+  namespace: main
 spec:
   replicas: 1
   selector:
@@ -22,3 +23,19 @@ spec:
         volumeMounts:
           - mountPath: /srv/files
             name: files
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: pingpong-cfg
+                key: postgres_db
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: pingpong-cfg
+                key: postgres_user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pingpong-secret
+                key: POSTGRES_PASSWORD

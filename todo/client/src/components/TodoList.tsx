@@ -1,20 +1,24 @@
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import React from 'react';
-
-const todos = [
-  "TODO 1",
-  "TODO 2"
-]
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../reducers';
+import { initializeTodos } from '../reducers/todoReducer';
 
 const TodoList = () => {
+  const todos = useSelector((state: RootState) => state.todos.todos)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(initializeTodos())
+  })
+
   return (
     <div>
       <List dense={true}>
-        {todos.map(todo => (
-          <ListItem key={todo}>
+        {todos ? todos.map(todo => (
+          <ListItem key={todo.name}>
             <ListItemText
-              primary={todo}
+              primary={todo.name}
             />
             <ListItemSecondaryAction>
               <IconButton>
@@ -22,7 +26,7 @@ const TodoList = () => {
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
-        ))}
+        )) : null}
       </List>
     </div>
   );

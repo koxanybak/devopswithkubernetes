@@ -14,7 +14,7 @@ const App = () => {
         direction="column"
       >
         <Grid item md={size}>
-          <img src="/api/image" alt="daily" />
+          <img src="/image/" alt="daily" />
         </Grid>
         <Grid item md={size}>
           <TodoForm />

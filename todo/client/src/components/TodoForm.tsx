@@ -2,6 +2,8 @@ import React from 'react';
 import { Formik } from "formik";
 import { Button, FormControl, TextField } from '@material-ui/core';
 import * as yup from "yup"
+import { useDispatch } from 'react-redux';
+import { createTodo } from '../reducers/todoReducer';
 
 type FormValues = {
   name: string;
@@ -16,6 +18,8 @@ const validationSchema = yup.object().shape({
 })
 
 const TodoForm = () => {
+  const dispatch = useDispatch()
+  
   return (
     <div>
       <Formik
@@ -23,6 +27,7 @@ const TodoForm = () => {
         validationSchema={validationSchema}
         onSubmit={(values, actions) => {
           console.log(values)
+          dispatch(createTodo(values.name))
           actions.setSubmitting(false)
         }}
       >

@@ -4,6 +4,7 @@ metadata:
   name: main-app-ing
   annotations:
     traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip"
+  namespace: main
 spec:
   rules:
   - http:
@@ -15,5 +16,5 @@ spec:
       - path: /pingpong
         backend:
           serviceName: pingpong-svc
-          servicePort: 1235
+          servicePort: 80
               

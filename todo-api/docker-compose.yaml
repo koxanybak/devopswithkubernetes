@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+  api:
+    build: .
+    container_name: todo-api
+    image: koxanybak/todo-api
+    ports:
+      - 8000:8000

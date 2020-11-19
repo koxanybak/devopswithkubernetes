@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
@@ -21,12 +23,28 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		pongs, err := ioutil.ReadFile("../files/count.txt")
+		
+		pongCountRes, err := http.Get("http://pingpong-svc/count")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		res := fmt.Sprintf("%s: %s\nPing / Pongs: %s", string(date), rnd.String(), string(pongs))
+		defer pongCountRes.Body.Close()
+		buf := new(strings.Builder)
+		_, err = io.Copy(buf, pongCountRes.Body)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		pongs := buf.String()
+
+		res := fmt.Sprintf(
+			"%s\n%s: %s\nPing / Pongs: %s",
+			os.Getenv("MESSAGE"),
+			string(date),
+			rnd.String(),
+			string(pongs),
+		)
 		io.WriteString(w, res)
 	})
 	log.Fatal(http.ListenAndServe("0.0.0.0:8000", r))
