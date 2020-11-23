@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/go-pg/pg/v10"
+	"github.com/go-pg/pg/v10/orm"
 	"github.com/gorilla/mux"
 )
 
@@ -52,22 +53,22 @@ func main() {
 	log.Println(os.Getenv("POSTGRES_PASSWORD"))
 	log.Println(os.Getenv("POSTGRES_DB"))
 	log.Println(os.Getenv("POSTGRES_USER"))
-	// db = pg.Connect(&pg.Options{
-	// 	User: os.Getenv("POSTGRES_USER"),
-	// 	Password: os.Getenv("POSTGRES_PASSWORD"),
-	// 	Database: os.Getenv("POSTGRES_DB"),
-	// 	Addr: "postgres-svc:5432",
-	// })
+	db = pg.Connect(&pg.Options{
+		User: os.Getenv("POSTGRES_USER"),
+		Password: os.Getenv("POSTGRES_PASSWORD"),
+		Database: os.Getenv("POSTGRES_DB"),
+		Addr: "postgres-svc:5432",
+	})
 
-	// defer db.Close()
-	// for _, model := range []interface{}{&Count{}} {
-	// 	err := db.Model(model).CreateTable(&orm.CreateTableOptions{
-	// 		IfNotExists: true,
-	// 	})
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// }
+	defer db.Close()
+	for _, model := range []interface{}{&Count{}} {
+		err := db.Model(model).CreateTable(&orm.CreateTableOptions{
+			IfNotExists: true,
+		})
+		if err != nil {
+			panic(err)
+		}
+	}
 
 
 	r := mux.NewRouter()

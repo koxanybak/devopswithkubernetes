@@ -1,0 +1,14 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: wikipedia
+spec:
+  schedule: "48 15 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: wikipedia
+              image: koxanybak/wikipedia-cronjob
+          restartPolicy: OnFailure

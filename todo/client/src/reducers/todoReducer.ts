@@ -31,7 +31,8 @@ export const todoReducer = (state: State = { todos: null }, action: TodoAction):
     case "INITIALIZE":
       return { ...state, todos: action.payload.todos }
     case "CREATE_TODO":
-      return { ...state, todos: state.todos?.concat(action.payload.todo) }
+      const todos = state.todos ? state.todos : []
+      return { ...state, todos: todos.concat(action.payload.todo) }
     default:
       return state
   }

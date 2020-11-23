@@ -19,4 +19,4 @@ COPY --from=builder /srv/ /srv/
 WORKDIR /srv
 ENV PORT=8000
 EXPOSE 8000
-ENTRYPOINT [ "wait-for-it", "TODO:5432", "--", "./srv" ]
+ENTRYPOINT [ "wait-for-it", "postgres-svc:5432", "--", "./srv" ]

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -29,6 +30,15 @@ func createTodo(w http.ResponseWriter, r *http.Request) {
 	newTodo := &models.Todo{
 		Name: todo.Name,
 	}
+
+	log.Println("New TODO:", newTodo)
+	// Check length
+	if len(newTodo.Name) > 140 {
+		http.Error(w, "Too long name for TODO", http.StatusBadRequest)
+		return
+	}
+
+	// Insert
 	_, err = utils.DB.Model(newTodo).Insert()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

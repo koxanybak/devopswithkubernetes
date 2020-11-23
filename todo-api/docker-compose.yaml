@@ -7,3 +7,20 @@ services:
     image: koxanybak/todo-api
     ports:
       - 8000:8000
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    depends_on:
+      - postgres-svc
+  postgres-svc:
+    container_name: todo-db
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    command: ["postgres", "-c", "log_statement=all"]
+    volumes:
+      - /tmp/tododata:/var/lib/postgresql/data:rw
