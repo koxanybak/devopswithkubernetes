@@ -21,8 +21,8 @@ jobs:
         project_id: ${{ secrets.GKE_PROJECT }}
     - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
-    - name: Create image name and tag
-      run: echo "::set-env name={IMAGE_WITH_TAG}::{${{ secrets.DOCKER_USERNAME }}/todo}"
+    # - name: Create image name and tag
+    #   run: echo "::set-env name={IMAGE_WITH_TAG}::{${{ secrets.DOCKER_USERNAME }}/todo}"
 
     - name: Build and Push
       uses: docker/build-push-action@v1
