@@ -72,7 +72,7 @@ func main() {
 
 
 	r := mux.NewRouter()
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/pingpong", func(w http.ResponseWriter, r *http.Request) {
 		cnt := getCount()
 		w.Write([]byte(fmt.Sprintf("pong %d", cnt)))
 		saveCount(cnt+1)

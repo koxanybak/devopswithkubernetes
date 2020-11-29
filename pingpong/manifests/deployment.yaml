@@ -13,16 +13,9 @@ spec:
       labels:
         app: pingpong
     spec:
-      volumes:
-      - name: files
-        persistentVolumeClaim:
-          claimName: main-app-claim
       containers:
       - name: pingpong
         image: koxanybak/pingpong
-        volumeMounts:
-          - mountPath: /srv/files
-            name: files
         env:
           - name: POSTGRES_DB
             valueFrom:

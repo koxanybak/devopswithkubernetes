@@ -2,8 +2,6 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: main-app-ing
-  annotations:
-    traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip"
   namespace: main
 spec:
   rules:
