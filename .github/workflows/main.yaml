@@ -6,7 +6,6 @@ on:
 env:
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
-  IMAGE: dwk-environments
 
 jobs:
   build-publish-deploy:
@@ -52,11 +51,11 @@ jobs:
         cd todo-api
         ./kustomize edit set image PROJECT/IMAGE=koxanybak/todo-api
         kubectl apply -k .
-        kubectl rollout status deployment $IMAGE
+        kubectl rollout status deployment todo-api-dep
 
     - name: Deploy todo
       run: |-
         cd todo
         ./kustomize edit set image PROJECT/IMAGE=koxanybak/todo
         kubectl apply -k .
-        kubectl rollout status deployment $IMAGE
+        kubectl rollout status deployment todo-dep
