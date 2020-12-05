@@ -21,29 +21,40 @@ jobs:
         project_id: ${{ secrets.GKE_PROJECT }}
     - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
-    # - name: Create image name and tag
-    #   run: echo "::set-env name={IMAGE_WITH_TAG}::{${{ secrets.DOCKER_USERNAME }}/todo}"
     - name: Login to DockerHub
-      uses: docker/login-action@v1 
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: |-
+        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     
-    - name: Build and Push
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: koxanybak/todo
-        platforms: linux/amd64,linux/arm64,linux/386
-        context: ./todo
+    - name: Build todo-api
+      run: |-
+        docker build ./todo-api -t koxanybak/todo-api:latest
+    - name: Build todo
+      run: |-
+        docker build ./todo -t koxanybak/todo:latest
+
+    - name: Docker push
+      run: |-
+        docker push koxanybak/todo-api
+        docker push koxanybak/todo
 
     - name: Set up Kustomize
       run: |-
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
 
-    - name: Deploy
+    - name: Deploy todo-api
+      run: |-
+        ./kustomize edit set image PROJECT/IMAGE=koxanybak/todo-api
+        cd todo-api
+        kubectl apply -k .
+        kubectl rollout status deployment $IMAGE
+
+    - name: Deploy todo
       run: |-
         ./kustomize edit set image PROJECT/IMAGE=koxanybak/todo
+        cd todo
         kubectl apply -k .
         kubectl rollout status deployment $IMAGE
