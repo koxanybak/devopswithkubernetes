@@ -11,6 +11,7 @@ import (
 )
 
 func getTodos(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL.Path)
 	var todos []models.Todo
 	err := utils.DB.Model(&todos).Select()
 	if err != nil {

@@ -40,24 +40,32 @@ export const todoReducer = (state: State = { todos: null }, action: TodoAction):
 
 export const createTodo = (name: string) => {
   return async (dispatch: Dispatch<TodoAction>) => {
-    const newTodo = await addTodo({ name })
-    dispatch({
-      type: "CREATE_TODO",
-      payload: {
-        todo: newTodo,
-      },
-    })
+    try {
+      const newTodo = await addTodo({ name })
+      dispatch({
+        type: "CREATE_TODO",
+        payload: {
+          todo: newTodo,
+        },
+      })
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 
 export const initializeTodos = () => {
   return async (dispatch: Dispatch<TodoAction>) => {
-    const todos = await getTodos()
-    dispatch({
-      type: "INITIALIZE",
-      payload: {
-        todos
-      }
-    })
+    try {
+      const todos = await getTodos()
+      dispatch({
+        type: "INITIALIZE",
+        payload: {
+          todos
+        }
+      })
+    } catch (e) {
+      console.error(e)
+    }
   }
 }

@@ -10,12 +10,12 @@ const TodoList = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(initializeTodos())
-  }, [])
+  }, [dispatch])
 
   return (
     <div>
       <List dense={true}>
-        {todos ? todos.map(todo => (
+        {todos && typeof todos !== "string" ? todos.map(todo => (
           <ListItem key={todo.name}>
             <ListItemText
               primary={todo.name}

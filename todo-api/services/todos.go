@@ -1,6 +1,8 @@
 package services
 
 import (
+	"log"
+
 	"github.com/koxanybak/todo-api/models"
 	"github.com/koxanybak/todo-api/utils"
 )
@@ -25,6 +27,6 @@ func CreateTodo(name string) *models.Todo {
 	if err != nil {
 		panic(err)
 	}
-
+	log.Println("New todo created:", newTodo)
 	return newTodo
 }

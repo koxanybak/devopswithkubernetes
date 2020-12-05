@@ -9,10 +9,15 @@ import (
 	"github.com/koxanybak/todo-api/utils"
 )
 
+func home(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+}
+
 func main() {
 	utils.ConnectToPostgres()
 
 	r := mux.NewRouter()
+	r.HandleFunc("/", home)
 	handlers.TodoRouter(r)
 
 	log.Println("Listening on 8000")

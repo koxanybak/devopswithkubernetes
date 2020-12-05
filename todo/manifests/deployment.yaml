@@ -13,16 +13,9 @@ spec:
       labels:
         app: todo
     spec:
-      volumes:
-        - name: assets
-          persistentVolumeClaim:
-              claimName: todo-claim
       containers:
       - name: todo
         image: koxanybak/todo
-        volumeMounts:
-          - mountPath: /srv/assets
-            name: assets
         resources:
           limits:
             cpu: "150m"
