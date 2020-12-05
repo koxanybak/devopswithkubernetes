@@ -32,3 +32,8 @@ spec:
               secretKeyRef:
                 name: pingpong-secret
                 key: POSTGRES_PASSWORD
+        resources:
+          limits:
+            cpu: "150m"
+            memory: "100Mi"
+

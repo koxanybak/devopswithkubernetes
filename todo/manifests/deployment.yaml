@@ -23,3 +23,7 @@ spec:
         volumeMounts:
           - mountPath: /srv/assets
             name: assets
+        resources:
+          limits:
+            cpu: "150m"
+            memory: "100Mi"

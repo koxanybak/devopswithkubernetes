@@ -49,13 +49,17 @@ jobs:
     - name: Deploy todo-api
       run: |-
         cd todo-api
+        kubectl create namespace ${GITHUB_REF#refs/heads/} || true
+        kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
+        ./kustomize edit set namespace ${GITHUB_REF#refs/heads/}
         ./kustomize edit set image PROJECT/IMAGE=koxanybak/todo-api
         kubectl apply -k .
-        kubectl rollout status deployment todo-api-dep
 
     - name: Deploy todo
       run: |-
         cd todo
+        kubectl create namespace ${GITHUB_REF#refs/heads/} || true
+        kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
+        ./kustomize edit set namespace ${GITHUB_REF#refs/heads/}
         ./kustomize edit set image PROJECT/IMAGE=koxanybak/todo
         kubectl apply -k .
-        kubectl rollout status deployment todo-dep
