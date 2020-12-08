@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcaster-dep
+spec:
+  selector:
+    matchLabels:
+      app: broadcaster-todo
+  replicas: 6
+  template:
+    metadata:
+      labels:
+        app: broadcaster-todo
+    spec:
+      containers:
+      - name: broadcaster-todo
+        image: koxanybak/broadcaster-todo
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "150m"
+        env:
+          - name: NATS
+            valueFrom:
+              configMapKeyRef:
+                name: todo-cfg
+                key: NATS
+          - name: TG_BOT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: broadcaster-secret
+                key: TG_BOT_TOKEN

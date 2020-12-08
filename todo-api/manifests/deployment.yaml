@@ -15,6 +15,18 @@ spec:
       containers:
       - name: todo-api
         image: koxanybak/todo-api
+        readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: /api/todos/
+              port: 8000
+        livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            httpGet:
+              path: /api/todos/
+              port: 8000
         env:
           - name: POSTGRES_DB
             valueFrom:
@@ -26,6 +38,11 @@ spec:
               configMapKeyRef:
                 name: todo-cfg
                 key: POSTGRES_USER
+          - name: NATS
+            valueFrom:
+              configMapKeyRef:
+                name: todo-cfg
+                key: NATS
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:

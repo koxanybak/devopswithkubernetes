@@ -15,6 +15,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	utils.ConnectToPostgres()
+	utils.NatsConnect()
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", home)

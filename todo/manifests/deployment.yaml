@@ -16,6 +16,18 @@ spec:
       containers:
       - name: todo
         image: koxanybak/todo
+        readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 8000
+        livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 8000
         resources:
           limits:
             cpu: "150m"

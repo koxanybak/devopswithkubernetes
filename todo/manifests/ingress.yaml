@@ -4,14 +4,17 @@ metadata:
   name: todo-ing
   namespace: project
 spec:
+  backend:
+    serviceName: todo-api-svc
+    servicePort: 80
   rules:
   - http:
       paths:
-      - path: /*
+      - path: /
         backend:
           serviceName: todo-svc
           servicePort: 80
-      - path: /api/*
+      - path: /api/
         backend:
           serviceName: todo-api-svc
           servicePort: 80

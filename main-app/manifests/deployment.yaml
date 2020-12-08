@@ -20,6 +20,12 @@ spec:
       containers:
       - name: main-app-hash
         image: koxanybak/hash
+        readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 8000
         env:
           - name: MESSAGE
             valueFrom:

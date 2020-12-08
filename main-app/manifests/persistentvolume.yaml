@@ -4,12 +4,14 @@ metadata:
   name: main-app-pv
   namespace: main
 spec:
-  storageClassName: standard
+  storageClassName: manual
   capacity:
     storage: 50Mi
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
+  local:
+    path: /tmp/kube
   nodeAffinity:
     required:
       nodeSelectorTerms:

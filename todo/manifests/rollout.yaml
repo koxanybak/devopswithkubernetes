@@ -1,0 +1,57 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: todo-dep
+  namespace: project
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: todo
+  strategy:
+    canary:
+      analysis:
+        templates:
+        - templateName: cpu-usage
+        startingStep: 1
+      steps:
+      - setWeight: 20
+      - pause:
+          duration: 2m
+      - setWeight: 40
+      - pause:
+          duration: 2m
+      - setWeight: 60
+      - pause:
+          duration: 2m
+      - setWeight: 80
+      - pause:
+          duration: 2m
+      - setWeight: 100
+      - pause:
+          duration: 2m
+          
+  template:
+    metadata:
+      labels:
+        app: todo
+    spec:
+      containers:
+      - name: todo
+        image: koxanybak/todo
+        readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 6
+            httpGet:
+              path: /
+              port: 8000
+        livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 8000
+        resources:
+          limits:
+            cpu: "150m"
+            memory: "100Mi"

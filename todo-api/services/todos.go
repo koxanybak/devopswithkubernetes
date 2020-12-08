@@ -18,15 +18,29 @@ func GetTodos() []models.Todo {
 	return todos
 }
 
-// CreateTodo gets all todos
+// CreateTodo creates a todo
 func CreateTodo(name string) *models.Todo {
 	newTodo := &models.Todo{
 		Name: name,
+		Done: false,
 	}
 	_, err := utils.DB.Model(newTodo).Insert()
 	if err != nil {
 		panic(err)
 	}
 	log.Println("New todo created:", newTodo)
+	return newTodo
+}
+
+// UpdateTodo updates a todo
+func UpdateTodo(newTodo *models.Todo) *models.Todo {
+	_, err := utils.DB.Model(newTodo).
+		OnConflict("(id) DO UPDATE").
+		Set("Name = EXCLUDED.Name, Done = EXCLUDED.Done").
+		Insert()
+	if err != nil {
+		panic(err)
+	}
+	log.Println("Todo updated:", newTodo)
 	return newTodo
 }

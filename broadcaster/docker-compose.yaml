@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+  api:
+    build: .
+    container_name: broadcaster-todo
+    image: koxanybak/broadcaster-todo
+    environment:
+      NATS: nats://my-nats:4222
