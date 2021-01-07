@@ -10,25 +10,27 @@ spec:
       app: todo
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         app: todo
     spec:
       containers:
-      - name: todo
-        image: koxanybak/todo
-        readinessProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            httpGet:
-              path: /
-              port: 8000
+      - image: koxanybak/todo
         livenessProbe:
-            initialDelaySeconds: 20
-            periodSeconds: 5
-            httpGet:
-              path: /
-              port: 8000
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        name: todo
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 5
         resources:
           limits:
-            cpu: "150m"
-            memory: "100Mi"
+            cpu: 150m
+            memory: 100Mi

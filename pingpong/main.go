@@ -82,6 +82,6 @@ func main() {
 		io.WriteString(w, strconv.FormatInt(cnt, 10))
 	})
 
-	log.Println("Listeting on port", "8000")
-	log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%s", "8000"), r))
+	log.Println("Listeting on port", "8080")
+	log.Fatal(http.ListenAndServe(fmt.Sprintf("0.0.0.0:%s", "8080"), r))
 }

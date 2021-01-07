@@ -1,0 +1,7 @@
+apiVersion: batch.stable.dwk/v1
+kind: DummySite
+metadata:
+  name: examplecom
+  namespace: default
+spec:
+  websiteURL: "https://example.com/"

@@ -1,0 +1,3 @@
+- Flannel: k3d uses it
+- etcd: Kubernetes uses it
+- Traefik Proxy: k3d uses it for ingresses

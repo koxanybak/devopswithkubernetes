@@ -1,0 +1,6 @@
+version: "3.5"
+services:
+  ctrl:
+    build: .
+    image: koxanybak/dummysite-controller
+    container_name: ds-ctrl

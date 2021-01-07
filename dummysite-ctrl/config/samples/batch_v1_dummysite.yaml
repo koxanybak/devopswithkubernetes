@@ -1,0 +1,7 @@
+apiVersion: batch.stable.dwk/v1
+kind: DummySite
+metadata:
+  name: dummysite-sample
+spec:
+  # Add fields here
+  foo: bar

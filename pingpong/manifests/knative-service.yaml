@@ -1,0 +1,28 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: pingpong-ksvc
+spec:
+  template:
+    metadata:
+      name: pingpong-ksvc-f
+    spec:
+      containers:
+      - name: pingpong-ksvc-f
+        image: koxanybak/pingpong
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: pingpong-cfg
+                key: postgres_db
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: pingpong-cfg
+                key: postgres_user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pingpong-secret
+                key: POSTGRES_PASSWORD
